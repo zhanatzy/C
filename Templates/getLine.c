@@ -1,17 +1,22 @@
 #include <stdio.h>
 
-void getLine (char * const s, const size_t max);
+#define LIMIT 128
+
+int getline_ (char s[], int lim);
 
 int main (void) {
-    char string[100];
-    getLine(string, 100);
-    printf("%s\n", string);
+    char string[LIMIT];
+    int quan = getline_(string, LIMIT);
+    printf("%d - %s\n", quan, string);
     return 0;
 }
 
-void getLine (char * const s, const size_t max) {
-    char *p = s;
-    while ((*p = getchar()) != '\n' && p - s < max - 1)
-        ++p;
-    *p = '\0';
+int getline_ (char s[], int lim) {
+    int c, i = 0;
+    while (--lim > 0 && (c = getchar()) != EOF && c != '\n')
+        s[i++] = c;
+    if (c == '\n')
+        s[i++] = c;
+    s[i] = '\0';
+    return i;
 }
